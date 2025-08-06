@@ -41,7 +41,6 @@ vector<int> lps(const char *pattern, int tamPattern) {
       }
     }
   }
-
   return LPS;
 }
 
@@ -105,7 +104,7 @@ vector<int> kmp(const char *texto, const char *pattern, int linhaAtual,
   return achados;
 }
 
-void KMPkrauss(const char *pattern, const vector<string> &partes) {
+void KMPwild(const char *pattern, const vector<string> &partes) {
   ifstream arquivo("entrada.txt");
   if (!arquivo.is_open()) {
     cerr << "Erro ao abrir o arquivo entrada.txt" << endl;
@@ -161,7 +160,7 @@ void KMPkrauss(const char *pattern, const vector<string> &partes) {
 }
 
 int main() {
-  const char *pattern = "b*la";
+  const char *pattern = "abra*o";
   cout << "Padrao: " << pattern << endl;
   vector<string> brokenPattern = quebraString(pattern, '*');
   for (const auto &part : brokenPattern) {
@@ -177,8 +176,8 @@ int main() {
   auto end_lps = high_resolution_clock::now();
   tempo_total_lps += duration_cast<nanoseconds>(end_lps - start_lps).count();
 
-  // Chama KMPkrauss para processar o arquivo inteiro
-  KMPkrauss(pattern, brokenPattern);
+  // Chama KMPwild para processar o arquivo inteiro
+  KMPwild(pattern, brokenPattern);
 
   cout << "Tempo total de execucao do KMP: " << (tempo_total_kmp / 1000000)
        << " ms" << endl;
