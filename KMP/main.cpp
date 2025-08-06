@@ -44,6 +44,7 @@ vector<int> lps(const char *pattern, int tamPattern) {
   return LPS;
 }
 
+bool match(char p, char t) { return p == '*' || p == t; }
 // buscando o padrão pattern no texto, algoritmo KMP
 vector<int> kmp(const char *texto, const char *pattern, int linhaAtual) {
   auto start = high_resolution_clock::now();
@@ -57,7 +58,7 @@ vector<int> kmp(const char *texto, const char *pattern, int linhaAtual) {
   int j = 0;
 
   for (i = 0; i < tamTexto;) {
-    if (pattern[j] == texto[i]) {
+    if (match(pattern[j], texto[i])) {
       i++;
       j++;
       if (j == tamPattern) {
@@ -83,7 +84,7 @@ int main() {
     return 1;
   }
 
-  const char *pattern = "bola";
+  const char *pattern = "rep*";
   cout << "Padrao: " << pattern << endl;
 
   string linha;
@@ -94,6 +95,7 @@ int main() {
       cout << "Na linha " << linhaAtual << endl;
       for (auto a : achados) {
         cout << "Padrão na posição " << a << endl;
+        cout << "Texto: " << linha << endl;
       }
     }
     linhaAtual++;
