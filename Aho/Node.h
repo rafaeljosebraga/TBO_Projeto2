@@ -12,7 +12,13 @@ public:
   char chave; // caractere que leva a este nó a partir do pai
 
   Node(char c = '\0') : chave(c), Falha(nullptr) {}
-  ~Node() {}
+  ~Node() {
+    // recursão para todos o filhos em cascata resultando em desalocamento
+    auto filhos = this->getFilhos();
+    for (auto &filho : filhos) {
+      filho->~Node(); // chama o destrutor de cada filho
+    }
+  }
 
   Map<Node *> filhos;
   Node *Falha;

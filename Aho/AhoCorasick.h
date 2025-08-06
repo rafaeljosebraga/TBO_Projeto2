@@ -11,6 +11,7 @@ using namespace std;
 
 class AhoCorasick {
 public:
+  ~AhoCorasick() { this->raiz->~Node(); };
   AhoCorasick(vector<string> palavras) {
     // Construir a Trie
     this->raiz = new Node();
@@ -37,6 +38,7 @@ public:
     while (!fila.empty()) {
 
       Node *atual = fila.front();
+      fila.pop();
       auto nodes = atual->getFilhos();
       auto chaves = atual->getChavesFilhos();
       for (int i = 0; i < nodes.size(); i++) {
@@ -57,7 +59,7 @@ public:
   void buscar(string texto, vector<int> &encontradas,
               vector<string> &palavrasEncontradas) {
     auto estado = this->raiz;
-    for (int i = 0; i < texto.size(); i++) {
+    for (int i = 0; i < texto.size();) {
       char c = texto[i];
       if (estado->temFilho(c)) {
         estado = estado->getFilho(c);
@@ -76,8 +78,6 @@ public:
       }
     }
   }
-
-  ~AhoCorasick();
 
   void inserir(const string &palavra);
   void construirFalhas();
