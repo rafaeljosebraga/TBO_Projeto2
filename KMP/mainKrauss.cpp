@@ -110,18 +110,20 @@ vector<int> KMPkrauss(const char *texto, const char *pattern, int linhaAtual,
   int tamTexto = strlen(texto);
 
   // Para cada possível posição inicial no texto
+  bool prefixo_asterisco = (pattern[0] == '*');
   for (int i = 0; i < tamTexto; ++i) {
     bool achou_todas = true;
     int pos = i;
-    // Para cada parte do padrão
-    vector<int> achados;
-    for (const auto &parte : partes) {
-      achados = kmp(texto + pos, parte.c_str(), linhaAtual);
-      if (achados.empty() || achados[0] != 0) {
+    for (int idx = 0; idx < partes.size(); ++idx) {
+      const auto &parte = partes[idx];
+      vector<int> achados = kmp(texto + pos, parte.c_str(), linhaAtual);
+      if (achados.empty() ||
+          (!prefixo_asterisco && idx == 0 && achados[0] != 0)) {
         achou_todas = false;
         break;
       }
-      pos += parte.length();
+      // Se prefixo tem *, pode começar em qualquer posição encontrada
+      pos += achados[0] + parte.length();
     }
     if (achou_todas) {
       achados_maiores.push_back(i);
@@ -137,7 +139,7 @@ int main() {
     return 1;
   }
 
-  const char *pattern = "*ba";
+  const char *pattern = "b*la";
   cout << "Padrao: " << pattern << endl;
   vector<string> brokenPattern = quebraString(pattern, '*');
   for (const auto &part : brokenPattern) {
