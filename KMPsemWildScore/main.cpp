@@ -83,7 +83,7 @@ int main() {
     return 1;
   }
 
-  const char *pattern = "rep*";
+  const char *pattern = "rep";
   cout << "Padrao: " << pattern << endl;
 
   string linha;
