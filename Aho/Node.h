@@ -13,10 +13,8 @@ public:
 
   Node(char c = '\0') : chave(c), Falha(nullptr) {}
   ~Node() {
-    // recursão para todos o filhos em cascata resultando em desalocamento
-    auto filhos = this->getFilhos();
-    for (auto &filho : filhos) {
-      filho->~Node(); // chama o destrutor de cada filho
+    for (auto filho : this->getFilhos()) {
+      delete filho;
     }
   }
 

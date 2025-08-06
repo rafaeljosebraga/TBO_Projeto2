@@ -7,8 +7,7 @@
 int main() {
   // Supondo que você já tenha um vetor de palavras
 
-  vector<string> palavras = {"bola", "minecraft", "roblox",
-                             "ela",  "ment",      "ira"};
+  vector<string> palavras = {"minecraft", "robl"};
 
   // Cronômetro para criação do autômato
   auto start_automato = std::chrono::high_resolution_clock::now();

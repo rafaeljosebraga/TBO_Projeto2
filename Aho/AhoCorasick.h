@@ -11,7 +11,7 @@ using namespace std;
 
 class AhoCorasick {
 public:
-  ~AhoCorasick() { this->raiz->~Node(); };
+  ~AhoCorasick() { delete this->raiz; }
   AhoCorasick(vector<string> palavras) {
     // Construir a Trie
     this->raiz = new Node();
